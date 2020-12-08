@@ -1,7 +1,38 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+@using AnimeDatabase.Web.Data
+@using AnimeDatabase.Web.Services.Interfaces
+@using AnimeDatabase.Web.Clients
 
-Welcome to your new app.
+@inject IEntityService<Anime> AnimeService
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<h1>Anime Database</h1>
+
+@if (anime != null)
+{
+    <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced"
+                AllowPaging="true" PageSize="10" AllowSorting="true" Data="@anime" TItem="Anime">
+        <Columns>
+            <RadzenGridColumn TItem="Anime" Property="Attributes.CoverImage.Tiny" Title="Image" Sortable="false" Filterable="false">
+                <Template Context="anime">
+                    <RadzenImage Path="@anime.Attributes.CoverImage?.Tiny"/>
+                </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Anime" Property="Attributes.CanonicalTitle" Title="Name" />
+            <RadzenGridColumn TItem="Anime" Property="Attributes.Slug" Title="Slug" />
+        </Columns>
+    </RadzenGrid>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code {
+    private IList<Anime> anime;
+
+    protected override async Task OnInitializedAsync()
+    {
+        anime = await AnimeService.Get();
+    }
+}

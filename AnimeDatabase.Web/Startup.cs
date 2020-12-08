@@ -1,4 +1,6 @@
 using AnimeDatabase.Web.Data;
+using AnimeDatabase.Web.Services;
+using AnimeDatabase.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +8,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Radzen;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +32,15 @@ namespace AnimeDatabase.Web
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
+
+            // Radzen Services
+            services.AddScoped<DialogService>();
+            services.AddScoped<NotificationService>();
+            services.AddScoped<TooltipService>();
+            services.AddScoped<ContextMenuService>();
+
+            services.AddScoped<IRestClient, RestClient>(x => new RestClient("https://kitsu.io/api/edge/")); // TODO: Replace with AppSettings variable
+            services.AddScoped<IEntityService<Anime>, AnimeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
