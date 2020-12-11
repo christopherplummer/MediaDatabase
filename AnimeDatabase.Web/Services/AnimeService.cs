@@ -1,4 +1,4 @@
-﻿using AnimeDatabase.Web.Data;
+﻿using AnimeDatabase.Web.Data.Anime;
 using Microsoft.Extensions.Configuration;
 using RestSharp;
 using System.Collections.Generic;
