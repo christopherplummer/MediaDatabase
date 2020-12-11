@@ -1,6 +1,34 @@
 ﻿@page "/anime/{Slug}"
-<h3>View</h3>
+
+@using AnimeDatabase.Web.Data.Anime
+@using AnimeDatabase.Web.Services.Interfaces
+
+@inject IEntityService<Anime> AnimeService
+@inject NavigationManager NavigationManager
+
+@if (anime != null)
+{
+    <h1>@anime.Attributes.CanonicalTitle</h1>
+}
+else
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
 
 @code {
+    private Anime anime;
+
+    [Parameter]
+    public string Slug { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var animeList = await AnimeService.Get();
+        anime = animeList.FirstOrDefault(x => x.Attributes.Slug == Slug);
+
+        if (anime == null) NavigationManager.NavigateTo("/manga");
+    }
 
 }

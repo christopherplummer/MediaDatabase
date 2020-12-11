@@ -4,6 +4,7 @@
 @using AnimeDatabase.Web.Services.Interfaces
 
 @inject IEntityService<Anime> AnimeService
+@inject NavigationManager NavigationManager
 
 <h1>Anime</h1>
 
@@ -14,17 +15,23 @@
         <Columns>
             <RadzenGridColumn TItem="Anime" Property="Attributes.PosterImage.Tiny" Title="Image" Sortable="false" Filterable="false">
                 <Template Context="anime">
-                    <RadzenImage Path="@anime?.Attributes?.PosterImage?.Tiny" />
+                    <RadzenImage Path="@anime?.Attributes?.PosterImage?.Tiny"/>
                 </Template>
             </RadzenGridColumn>
-            <RadzenGridColumn TItem="Anime" Property="Attributes.CanonicalTitle" Title="Name" />
-            <RadzenGridColumn TItem="Anime" Property="Attributes.Slug" Title="Slug" />
+            <RadzenGridColumn TItem="Anime" Property="Attributes.CanonicalTitle" Title="Name"/>
+            <RadzenGridColumn TItem="Anime">
+                            <Template Context="anime">
+                                <RadzenButton Icon="edit" Click="@((args) => View(anime.Attributes.Slug))"/>
+                            </Template>
+                        </RadzenGridColumn>
         </Columns>
     </RadzenGrid>
 }
 else
 {
-    <p><em>Loading...</em></p>
+    <p>
+        <em>Loading...</em>
+    </p>
 }
 
 @code {
@@ -34,4 +41,9 @@ else
     {
         anime = await AnimeService.Get();
     }
+    private void View(string slug)
+    {
+        NavigationManager.NavigateTo($"/anime/{slug}");
+    }
+    
 }

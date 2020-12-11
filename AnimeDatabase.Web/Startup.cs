@@ -34,7 +34,8 @@ namespace AnimeDatabase.Web
             services.AddScoped<TooltipService>();
             services.AddScoped<ContextMenuService>();
 
-            services.AddScoped<IRestClient, RestClient>(x => new RestClient("https://kitsu.io/api/edge/")); // TODO: Replace with AppSettings variable
+            services.AddScoped<IRestClient, RestClient>(x =>
+                new RestClient("https://kitsu.io/api/edge/")); // TODO: Replace with AppSettings variable
             services.AddScoped<IEntityService<Anime>, AnimeService>();
             services.AddScoped<IEntityService<Manga>, MangaService>();
         }
