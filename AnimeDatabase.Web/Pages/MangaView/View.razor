@@ -9,6 +9,32 @@
 @if (manga != null)
 {
     <h1>@manga.Attributes.CanonicalTitle</h1>
+                                        
+    <RadzenCard Style="width:600px; margin-bottom: 20px; height:500px;">
+        <div class="row">
+            <div class="col-md-6">
+                <div>English Name:</div>
+                <b>@manga.Attributes.Titles.EnUs</b>
+                <div style="margin-top:20px">Japanese Name:</div>
+                <b>@manga.Attributes.Titles.JaJp</b>
+                <div style="margin-top:20px">
+                    <RadzenImage Path="@manga.Attributes.PosterImage.Tiny" Style="width:100px;" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div>Chapter Count:</div>
+                <b>@manga.Attributes.ChapterCount</b>
+                <div>Volume Count:</div>
+                <b>@manga.Attributes.VolumeCount</b>
+                <div style="margin-top:20px">Start Date:</div>
+                <b>@manga.Attributes.StartDate</b>
+                <div style="margin-top:20px">End Date:</div>
+                <b>@manga.Attributes.EndDate</b>
+                <div style="margin-top:20px">Synopsis:</div>
+                <b>@manga.Attributes.Synopsis</b>
+            </div>
+        </div>
+    </RadzenCard>
 }
 else
 {

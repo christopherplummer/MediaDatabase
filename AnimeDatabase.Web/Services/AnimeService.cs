@@ -4,6 +4,7 @@ using RestSharp;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AnimeDatabase.Web.Data;
 
 namespace AnimeDatabase.Web.Services
 {
@@ -17,8 +18,16 @@ namespace AnimeDatabase.Web.Services
         {
             var request = new RestRequest("anime");
             request.AddHeader("Accept", "application/vnd.api+json");
-            var response = await _restClient.ExecuteAsync<AnimeContainer>(request);
+            var response = await _restClient.ExecuteAsync<Response<List<Anime>>>(request);
             return response.Data.Data.ToList();
+        }
+
+        public override async Task<Anime> Get(int id)
+        {
+            var request = new RestRequest($"anime/{id}");
+            request.AddHeader("Accept", "application/vnd.api+json");
+            var response = await _restClient.ExecuteAsync<Response<Anime>>(request);
+            return response.Data.Data;
         }
     }
 }

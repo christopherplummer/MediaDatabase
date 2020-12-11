@@ -20,7 +20,7 @@ namespace AnimeDatabase.Web.Services
 
         public abstract Task<List<TEntity>> Get();
 
-        //public abstract Task<TEntity> Get(int id);
+        public abstract Task<TEntity> Get(int id);
 
         //public abstract Task<TEntity> Post(TEntity model);
 
