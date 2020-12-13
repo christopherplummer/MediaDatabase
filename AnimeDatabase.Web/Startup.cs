@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using AnimeDatabase.Web.Cache;
+using AnimeDatabase.Web.Cache.Interfaces;
 using AnimeDatabase.Web.Data.Anime;
 using AnimeDatabase.Web.Data.Manga;
 using AnimeDatabase.Web.Services;
@@ -34,10 +37,13 @@ namespace AnimeDatabase.Web
             services.AddScoped<TooltipService>();
             services.AddScoped<ContextMenuService>();
 
-            services.AddScoped<IRestClient, RestClient>(x =>
+            services.AddSingleton<IRestClient, RestClient>(x =>
                 new RestClient("https://kitsu.io/api/edge/")); // TODO: Replace with AppSettings variable
             services.AddScoped<IEntityService<Anime>, AnimeService>();
             services.AddScoped<IEntityService<Manga>, MangaService>();
+
+            //services.AddSingleton<ICache<List<Anime>>, AnimeCache>(); // TODO: Implement the cache
+            //services.AddSingleton<ICache<List<Manga>>, MangaCache>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
