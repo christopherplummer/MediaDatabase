@@ -9,30 +9,50 @@
 @if (anime != null)
 {
     <h1>@anime.Attributes.CanonicalTitle</h1>
-                                        
-    <RadzenCard Style="width:600px; margin-bottom: 20px; height:500px;">
-        <div class="row">
-            <div class="col-md-6">
-                <div>English Name:</div>
-                <b>@anime.Attributes.Titles.EnUs</b>
-                <div style="margin-top:20px">Japanese Name:</div>
-                <b>@anime.Attributes.Titles.JaJp</b>
+
+    <div class="row">
+        <div class="col-md-3">
+            <RadzenCard Style="margin-bottom: 20px;">
                 <div style="margin-top:20px">
-                    <RadzenImage Path="@anime.Attributes.PosterImage.Tiny" Style="width:100px;" />
+                    <RadzenImage Path="@anime.Attributes.PosterImage.Small"/>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div>Episode Count:</div>
-                <b>@anime.Attributes.EpisodeCount</b>
-                <div style="margin-top:20px">Start Date:</div>
-                <b>@anime.Attributes.StartDate</b>
-                <div style="margin-top:20px">End Date:</div>
-                <b>@anime.Attributes.EndDate</b>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div style="margin-top:20px">English Name:</div>
+                        <b>@anime.Attributes.Titles.En</b>
+                    </div>
+                    <div class="col-md-6">
+                        <div style="margin-top:20px">Start Date:</div>
+                        <b>@anime.Attributes.StartDate</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div style="margin-top:20px">Japanese Name:</div>
+                        <b>@anime.Attributes.Titles.En</b>
+                    </div>
+                    <div class="col-md-6">
+                        <div style="margin-top:20px">End Date:</div>
+                        <b>@anime.Attributes.EndDate</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+                        <div style="margin-top:20px">Episode Count:</div>
+                        <b>@anime.Attributes.EpisodeCount</b>
+                    </div>
+                </div>
+            </RadzenCard>
+        </div>
+        <div class="col-md-6">
+            <RadzenCard Style="margin-bottom: 20px;">
                 <div style="margin-top:20px">Synopsis:</div>
                 <b>@anime.Attributes.Synopsis</b>
-            </div>
+            </RadzenCard>
         </div>
-    </RadzenCard>
+    </div>
 }
 else
 {
