@@ -11,10 +11,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MediaDatabase.Dashboard.Data.Anime;
+using MediaDatabase.Dashboard.Data.Authentication;
 using MediaDatabase.Dashboard.Data.Manga;
 using MediaDatabase.Dashboard.Services;
 using MediaDatabase.Dashboard.Services.Interfaces;
 using RestSharp;
+using MediaDatabase.Dashboard.Cache.Interfaces;
+using MediaDatabase.Dashboard.Cache;
 
 namespace MediaDatabase.Dashboard
 {
@@ -35,11 +38,14 @@ namespace MediaDatabase.Dashboard
             services.AddServerSideBlazor();
 
             services.AddSingleton<IRestClient, RestClient>(x =>
-                new RestClient("https://kitsu.io/api/edge/")); // TODO: Replace with AppSettings variable
-            services.AddScoped<IEntityService<Anime>, AnimeService>();
-            services.AddScoped<IEntityService<Manga>, MangaService>();
+                new RestClient("https://kitsu.io/api")); // TODO: Replace with AppSettings variable
+            
+            //services.AddSingleton<IEntityService<Authentication>, AuthenticationService>();
+            //services.AddSingleton<ICache<Anime>, AnimeCache>(); // TODO: Implement the cache
 
-            //services.AddSingleton<ICache<List<Anime>>, AnimeCache>(); // TODO: Implement the cache
+            services.AddSingleton<IEntityService<Anime>, AnimeService>();
+            services.AddSingleton<IEntityService<Manga>, MangaService>();
+
             //services.AddSingleton<ICache<List<Manga>>, MangaCache>();
         }
 

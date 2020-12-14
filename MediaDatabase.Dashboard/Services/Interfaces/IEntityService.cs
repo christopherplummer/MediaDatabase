@@ -7,9 +7,9 @@ namespace MediaDatabase.Dashboard.Services.Interfaces
     {
         Task<List<TEntity>> Get();
 
-        //Task<TEntity> Get(Guid id);
+        Task<TEntity> Get(int id);
 
-        //Task<TEntity> Post(TEntity model);
+        Task<TEntity> Post(TEntity model);
 
         //Task<TEntity> Put(TEntity model);
 

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MediaDatabase.Dashboard.Cache.Interfaces
 {
@@ -6,7 +7,7 @@ namespace MediaDatabase.Dashboard.Cache.Interfaces
     {
         Task Init();
 
-        TEntity Get();
+        List<TEntity> Get();
 
         Task PopulateData();
 

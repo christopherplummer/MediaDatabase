@@ -8,7 +8,7 @@ using MediaDatabase.Dashboard.Services.Interfaces;
 
 namespace MediaDatabase.Dashboard.Cache
 {
-    public class AnimeCache : Cache<List<Anime>>
+    public class AnimeCache : Cache<Anime>
     {
         private const string _path = "Cache/anime.json";
 
@@ -48,7 +48,7 @@ namespace MediaDatabase.Dashboard.Cache
 
         public override async Task<bool> WriteToJsonCache()
         {
-            var cacheModel = new CacheModel<List<Anime>>
+            var cacheModel = new CacheModel<Anime>
             {
                 Data = _anime,
                 ExpirationDate = DateTime.Now.AddDays(14)
@@ -62,11 +62,11 @@ namespace MediaDatabase.Dashboard.Cache
             return !string.IsNullOrEmpty(json);
         }
 
-        public override async Task<CacheModel<List<Anime>>> ReadFromJsonCache()
+        public override async Task<CacheModel<Anime>> ReadFromJsonCache()
         {
             using var sw = new StreamReader(_path);
             var json = await sw.ReadToEndAsync();
-            return JsonSerializer.Deserialize<CacheModel<List<Anime>>>(json);
+            return JsonSerializer.Deserialize<CacheModel<Anime>>(json);
         }
     }
 }

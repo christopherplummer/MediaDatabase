@@ -22,7 +22,7 @@ namespace MediaDatabase.Dashboard.Services
 
         public abstract Task<TEntity> Get(int id);
 
-        //public abstract Task<TEntity> Post(TEntity model);
+        public abstract Task<TEntity> Post(TEntity model);
 
         //public abstract Task<TEntity> Put(TEntity model);
 
