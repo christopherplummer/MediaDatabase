@@ -1,0 +1,49 @@
+﻿@page "/anime"
+@using MediaDatabase.Web.Data.Anime
+@using MediaDatabase.Web.Services.Interfaces
+
+@inject IEntityService<Anime> AnimeService
+@inject NavigationManager NavigationManager
+
+<h1>Anime</h1>
+
+@if (anime != null)
+{
+    <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced"
+                AllowPaging="true" PageSize="10" AllowSorting="true" Data="@anime" TItem="Anime">
+        <Columns>
+            <RadzenGridColumn TItem="Anime" Property="Attributes.PosterImage.Tiny" Title="Image" Sortable="false" Filterable="false">
+                <Template Context="anime">
+                    <RadzenImage Path="@anime?.Attributes?.PosterImage?.Tiny"/>
+                </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Anime" Property="Attributes.CanonicalTitle" Title="Name"/>
+            <RadzenGridColumn TItem="Anime">
+                <Template Context="anime">
+                    <RadzenButton Icon="edit" Click="@(args => View(anime.Attributes.Slug))"/>
+                </Template>
+            </RadzenGridColumn>
+        </Columns>
+    </RadzenGrid>
+}
+else
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+
+@code {
+    private IList<Anime> anime;
+
+    protected override async Task OnInitializedAsync()
+    {
+        anime = await AnimeService.Get();
+    }
+
+    private void View(string slug)
+    {
+        NavigationManager.NavigateTo($"/anime/{slug}");
+    }
+
+}

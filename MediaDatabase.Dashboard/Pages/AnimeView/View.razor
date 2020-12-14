@@ -1,0 +1,77 @@
+﻿@page "/anime/{Slug}"
+@using MediaDatabase.Dashboard.Data.Anime
+@using MediaDatabase.Dashboard.Services.Interfaces
+
+@inject IEntityService<Anime> AnimeService
+@inject NavigationManager NavigationManager
+
+@if (anime != null)
+{
+    <h1>@anime.Attributes.CanonicalTitle</h1>
+
+    <div class="row">
+        <div class="col-md-3">
+            <RadzenCard Style="margin-bottom: 20px;">
+                <div style="margin-top:20px">
+                    <RadzenImage Path="@anime.Attributes.PosterImage.Small" />
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div style="margin-top:20px">English Name:</div>
+                        <b>@anime.Attributes.Titles.En</b>
+                    </div>
+                    <div class="col-md-6">
+                        <div style="margin-top:20px">Start Date:</div>
+                        <b>@anime.Attributes.StartDate</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div style="margin-top:20px">Japanese Name:</div>
+                        <b>@anime.Attributes.Titles.En</b>
+                    </div>
+                    <div class="col-md-6">
+                        <div style="margin-top:20px">End Date:</div>
+                        <b>@anime.Attributes.EndDate</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+                        <div style="margin-top:20px">Episode Count:</div>
+                        <b>@anime.Attributes.EpisodeCount</b>
+                    </div>
+                </div>
+            </RadzenCard>
+        </div>
+        <div class="col-md-6">
+            <RadzenCard Style="margin-bottom: 20px;">
+                <div style="margin-top:20px">Synopsis:</div>
+                <b>@anime.Attributes.Synopsis</b>
+            </RadzenCard>
+        </div>
+    </div>
+}
+else
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+
+@code {
+    private Anime anime;
+
+    [Parameter]
+    public string Slug { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var animeList = await AnimeService.Get();
+        anime = animeList.FirstOrDefault(x => x.Attributes.Slug == Slug);
+
+        if (anime == null) NavigationManager.NavigateTo("/manga");
+    }
+
+}
