@@ -10,44 +10,44 @@
     <h1>@manga.Attributes.CanonicalTitle</h1>
 
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-xl-3 col-xs-12">
             <RadzenCard Style="margin-bottom: 20px;">
                 <div style="margin-top:20px">
-                    <RadzenImage Path="@manga.Attributes.PosterImage.Small" />
+                    <RadzenImage Path="@manga.Attributes.PosterImage.Small" Style="width: 100%; height: 100%" />
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-6">
                         <div style="margin-top:20px">English Name:</div>
                         <b>@manga.Attributes.Titles.En</b>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-6">
                         <div style="margin-top:20px">Start Date:</div>
                         <b>@manga.Attributes.StartDate</b>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-6">
                         <div style="margin-top:20px">Japanese Name:</div>
                         <b>@manga.Attributes.Titles.En</b>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-6">
                         <div style="margin-top:20px">End Date:</div>
                         <b>@manga.Attributes.EndDate</b>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-6">
                         <div style="margin-top:20px">Volume Count:</div>
                         <b>@manga.Attributes.VolumeCount</b>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-6">
                         <div style="margin-top:20px">Chapter Count:</div>
                         <b>@manga.Attributes.ChapterCount</b>
                     </div>
                 </div>
             </RadzenCard>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 col-xs-12">
             <RadzenCard Style="margin-bottom: 20px;">
                 <div style="margin-top:20px">Synopsis:</div>
                 <b>@manga.Attributes.Synopsis</b>

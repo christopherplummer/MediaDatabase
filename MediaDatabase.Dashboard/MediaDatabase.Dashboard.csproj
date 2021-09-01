@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>86c15c73-8880-44ac-a75c-0afa0e6a91c5</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +12,12 @@
   <ItemGroup>
     <PackageReference Include="Radzen.Blazor" Version="2.18.4" />
     <PackageReference Include="RestSharp" Version="106.11.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\anime.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

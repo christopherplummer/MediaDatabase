@@ -1,8 +1,8 @@
 ﻿@page "/anime"
 @using MediaDatabase.Dashboard.Data.Anime
-@using MediaDatabase.Dashboard.Services.Interfaces
+@using MediaDatabase.Dashboard.Cache.Interfaces
 
-@inject IEntityService<Anime> AnimeService
+@inject ICache<Anime> AnimeCache
 @inject NavigationManager NavigationManager
 
 <h1>Anime</h1>
@@ -38,8 +38,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var temp = await AnimeService.Get();
-        anime = temp.OrderBy(x => x.Attributes.CanonicalTitle).ToList();
+        anime = AnimeCache.Get().Distinct().OrderBy(x => x.Attributes.CanonicalTitle).ToList();
     }
 
     private void View(string slug)

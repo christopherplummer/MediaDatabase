@@ -23,19 +23,8 @@ namespace MediaDatabase.Dashboard.Services
             var request = new RestRequest("/edge/anime?page[limit]=20&page[offset]=50");
             request.AddHeader("Accept", "application/vnd.api+json");
             var response = await _restClient.ExecuteAsync<Response<List<Anime>>>(request);
-            
-            var cacheModel = new CacheModel<Anime>
-            {
-                Data = response.Data.Data.ToList(),
-                ExpirationDate = DateTime.Now.AddDays(14)
-            };
 
-            var json = JsonSerializer.Serialize(cacheModel);
-
-            await using var sw = new StreamWriter("Cache/anime.json");
-            await sw.WriteAsync(json);
-            
-            return response.Data.Data.ToList();
+            return response.Data.Data;
         }
 
         public override async Task<Anime> Get(int id)

@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using MediaDatabase.Dashboard.Data.Anime;
 using MediaDatabase.Dashboard.Services.Interfaces;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace MediaDatabase.Dashboard.Cache
 {
     public class AnimeCache : Cache<Anime>
     {
-        private const string _path = "Cache/anime.json";
-
-        private readonly IEntityService<Anime> _animeService;
-
-        public AnimeCache(IEntityService<Anime> service)
-        {
-            _animeService = service;
-        }
+        private string _path;
 
         private List<Anime> _anime { get; set; }
+
+        public AnimeCache()
+        {
+            _path = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development" ? "wwwroot/anime.json" : "/anime.json";
+        }
 
         public override async Task Init()
         {
@@ -34,16 +35,7 @@ namespace MediaDatabase.Dashboard.Cache
         public override async Task PopulateData()
         {
             var cacheModel = await ReadFromJsonCache();
-
-            if (cacheModel == null)
-            {
-                _anime = await _animeService.Get();
-                await WriteToJsonCache();
-            }
-            else
-            {
-                _anime = cacheModel.Data;
-            }
+            _anime = cacheModel.Data.GroupBy(x => x.Id).Select(x => x.First()).ToList();
         }
 
         public override async Task<bool> WriteToJsonCache()

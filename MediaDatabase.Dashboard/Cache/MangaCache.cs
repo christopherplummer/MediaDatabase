@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using MediaDatabase.Dashboard.Data.Manga;
 using MediaDatabase.Dashboard.Services.Interfaces;
+using Microsoft.AspNetCore.Hosting;
 
 namespace MediaDatabase.Dashboard.Cache
 {
     public class MangaCache : Cache<Manga>
     {
-        private const string _path = "Cache/manga.json";
+        private string _path;
 
-        private readonly IEntityService<Manga> _mangaService;
-
-        public MangaCache(IEntityService<Manga> mangaService)
+        public MangaCache()
         {
-            _mangaService = mangaService;
+            _path = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development" ? "wwwroot/anime.json" : "/wwwroot/anime.json";
         }
 
         private List<Manga> _manga { get; set; }
@@ -34,16 +34,7 @@ namespace MediaDatabase.Dashboard.Cache
         public override async Task PopulateData()
         {
             var cacheModel = await ReadFromJsonCache();
-
-            if (cacheModel == null)
-            {
-                _manga = await _mangaService.Get();
-                await WriteToJsonCache();
-            }
-            else
-            {
-                _manga = cacheModel.Data;
-            }
+            _manga = cacheModel.Data.GroupBy(x => x.Id).Select(x => x.First()).ToList();
         }
 
         public override async Task<bool> WriteToJsonCache()

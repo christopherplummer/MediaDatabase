@@ -41,10 +41,10 @@ namespace MediaDatabase.Dashboard
                 new RestClient("https://kitsu.io/api")); // TODO: Replace with AppSettings variable
             
             //services.AddSingleton<IEntityService<Authentication>, AuthenticationService>();
-            //services.AddSingleton<ICache<Anime>, AnimeCache>(); // TODO: Implement the cache
+            services.AddSingleton<ICache<Anime>, AnimeCache>(); // TODO: Implement the cache
 
-            services.AddSingleton<IEntityService<Anime>, AnimeService>();
-            services.AddSingleton<IEntityService<Manga>, MangaService>();
+            services.AddScoped<IEntityService<Anime>, AnimeService>();
+            services.AddScoped<IEntityService<Manga>, MangaService>();
 
             //services.AddSingleton<ICache<List<Manga>>, MangaCache>();
         }
